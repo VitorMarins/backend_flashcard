@@ -16,7 +16,7 @@ const UsuarioSchema: Schema<IUsuario> = new Schema(
     senha: { type: String, required: true, select: false },
     icon: {
       type: String,
-      default: "https://example.com/default-icon.png",
+      default: "https://placehold.co/800/png",
     },
   },
   { timestamps: true },
