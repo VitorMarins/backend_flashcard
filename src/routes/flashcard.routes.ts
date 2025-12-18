@@ -103,7 +103,7 @@ class FlashcardRoutes {
      *               conteudo:
      *                 type: string
      *               imagem:
-      *                type: string
+     *                type: string
      *               autor:
      *                 type: string
      *     responses:
@@ -140,7 +140,7 @@ class FlashcardRoutes {
      *               conteudo:
      *                 type: string
      *               imagem:
-      *                type: string
+     *                type: string
      *               autor:
      *                 type: string
      *     responses:
