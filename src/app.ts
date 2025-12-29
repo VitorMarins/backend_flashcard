@@ -1,4 +1,4 @@
-import express, { Application } from "express";
+import express, { Application as ApplicationType } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -11,38 +11,42 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 
-class App {
-  private server: Application;
+class Application {
+  private app: ApplicationType;
 
   constructor() {
-    this.server = express();
+    this.app = express();
     this.middlewares();
     this.router();
   }
 
   private middlewares() {
-    this.server.use(express.json());
-    this.server.use(express.urlencoded({ extended: true }));
-    this.server.use(cors(corsOptions));
-    this.server.use(helmet());
-    this.server.use(morgan("dev"));
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(cors(corsOptions));
+    this.app.use(helmet());
+    this.app.use(morgan("dev"));
   }
 
   private router() {
-    new AppRoutes(this.server);
-    swaggerRoute(this.server);
+    new AppRoutes(this.app);
+    swaggerRoute(this.app);
   }
 
   public initApp() {
     const PORT: Number = Number(process.env.PORT || 3000);
-    const server = this.server.listen(PORT, () => {
+    const appRuning = this.app.listen(PORT, () => {
       console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
     });
-    server.on("error", (e) => {
+    appRuning.on("error", (e) => {
       console.error("Erro no servidor:", e);
     });
     connectDB();
   }
+  
+  public getApptest() {
+    return this.app
+  }
 }
 
-export default new App();
+export default new Application();
