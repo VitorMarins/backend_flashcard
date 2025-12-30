@@ -43,9 +43,9 @@ class Application {
     });
     connectDB();
   }
-  
+
   public getApptest() {
-    return this.app
+    return this.app;
   }
 }
 
