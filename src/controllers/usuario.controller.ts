@@ -8,6 +8,7 @@ export default class UsuarioController {
       res.status(200).json(usuarios);
     } catch (error) {
       console.error(error);
+      res.status(500).json({ message: "Erro interno ao buscar usuários." });
     }
   }
 
@@ -15,13 +16,18 @@ export default class UsuarioController {
     try {
       const { id } = req.params;
       const usuario = await Usuario.findById(id);
+      if (!usuario) {
+        res.status(404).json({ message: "Usuário não encontrado." });
+        return;
+      }
       res.status(200).json(usuario);
     } catch (error) {
       console.error(error);
+      res.status(500).json({ message: "Erro interno ao buscar usuário." });
     }
   }
 
-  async UpdateUsuario(req: Request, res: Response): Promise<any> {
+  async UpdateUsuario(req: Request, res: Response): Promise<void> {
     try {
       const { id } = req.params;
       const { nome } = req.body;
@@ -30,9 +36,14 @@ export default class UsuarioController {
         { nome },
         { new: true },
       );
+      if (!usuario) {
+        res.status(404).json({ message: "Usuário não encontrado para atualização." });
+        return;
+      }
       res.status(200).json(usuario);
     } catch (error) {
       console.error(error);
+      res.status(500).json({ message: "Erro interno ao atualizar usuário." });
     }
   }
 
@@ -43,6 +54,7 @@ export default class UsuarioController {
       res.status(204).send();
     } catch (error) {
       console.error(error);
+      res.status(500).json({ message: "Erro interno ao deletar usuário." });
     }
   }
 }
