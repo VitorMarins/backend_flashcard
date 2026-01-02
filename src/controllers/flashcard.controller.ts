@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Flashcard } from "./../models/flashcard.model"; // Removi IFlashcard pois não é estritamente necessário no retorno do controller
+import { Flashcard } from "./../models/flashcard.model";
 
 export default class FlashcardController {
   // GET: Listar todos

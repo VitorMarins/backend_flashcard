@@ -35,19 +35,13 @@ export default class AuthController {
   async Login(req: Request, res: Response): Promise<any> {
     try {
       const { email, senha } = req.body;
-
-      // 👇 Garantir que a senha seja incluída no retorno
       const usuario = (await Usuario.findOne({ email }).select(
         "+senha",
       )) as IUsuario;
-
       if (!usuario || !(await usuario.compareSenha(senha))) {
         return res.status(401).json({ message: "Credenciais inválidas" });
       }
-
       const token = gerarToken({ id: usuario._id.toString() });
-
-      // Retornar também dados básicos do usuário (exceto senha)
       res.status(200).json({
         token,
         usuario: {

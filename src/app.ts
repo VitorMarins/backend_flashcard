@@ -44,7 +44,7 @@ class Application {
     connectDB();
   }
 
-  public getApptest() {
+  public getApptest() : ApplicationType {
     return this.app;
   }
 }
