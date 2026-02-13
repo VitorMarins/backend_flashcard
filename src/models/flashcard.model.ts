@@ -11,7 +11,7 @@ interface IFlashcard extends Document {
 const FlashcardSchema = new Schema(
   {
     nome: { type: String, required: true },
-    conteudo: { type: String, required: true },
+    conteudo: { type: String, required: true, maxLength: 250 },
     imagem: { type: String },
     autor: { type: Schema.Types.ObjectId, required: true, ref: "Usuario" },
   },
