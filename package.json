@@ -1,7 +1,7 @@
 {
   "name": "backend_flashcard",
   "version": "1.0.0",
-  "description": "",
+  "description": "API para gerenciar FlashCards de Estudo",
   "main": "src/index.ts",
   "scripts": {
     "start": "tsx src/index.ts",
