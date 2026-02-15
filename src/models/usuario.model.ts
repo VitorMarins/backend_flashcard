@@ -11,9 +11,9 @@ interface IUsuario extends Document {
 
 const UsuarioSchema: Schema<IUsuario> = new Schema(
   {
-    nome: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
-    senha: { type: String, required: true, select: false },
+    nome: { type: String, required: true, minLength: 2, maxLength: 150 },
+    email: { type: String, required: true, unique: true, minLength: 4, maxLength: 100 },
+    senha: { type: String, required: true, select: false, minLength: 4, maxLength: 100 },
     icon: {
       type: String,
       default: "https://placehold.co/800/png",
