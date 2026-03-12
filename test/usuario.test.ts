@@ -50,7 +50,7 @@ describe("Testes de Usuario", () => {
       .set("Authorization", `Bearer ${loginResponse.body.token}`);
     expect(response.statusCode).toBe(200);
     const usuarioEncontrado = response.body.some(
-      (u: any) =>
+      (u: { email: string; nome: string }) =>
         u.email === usuarioTeste.email && u.nome === usuarioTeste.nome,
     );
     expect(usuarioEncontrado).toBe(true);
