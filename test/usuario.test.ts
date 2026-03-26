@@ -8,8 +8,15 @@ describe("Testes de Usuario", () => {
     email: "fulano@gmail.com",
     senha: "teste",
   };
+  const usuarioTeste2 = {
+    nome: "Fulano 2",
+    email: "fulano2@gmail.com",
+    senha: "teste2",
+  };
 
-  test("Deve cadastrar um usuario", async () => {
+  type UsuarioTesteType = typeof usuarioTeste;
+
+  test("CT01 - Deve cadastrar um usuario", async () => {
     const response = await supertest(app.getApptest())
       .post("/auth/registrar")
       .set("Content-Type", "application/json")
@@ -20,7 +27,7 @@ describe("Testes de Usuario", () => {
     });
   });
 
-  test("Não deve cadastrar um usuario ja existente", async () => {
+  test("CT02 - Não deve cadastrar um usuario ja existente", async () => {
     await supertest(app.getApptest())
       .post("/auth/registrar")
       .set("Content-Type", "application/json")
@@ -35,12 +42,16 @@ describe("Testes de Usuario", () => {
     });
   });
 
-  test("Deve encontrar varios usuários", async () => {
+  test("CT03 - Deve encontrar varios usuários", async () => {
     const { nome, ...usuarioSemNome } = usuarioTeste;
     await supertest(app.getApptest())
       .post("/auth/registrar")
       .set("Content-Type", "application/json")
       .send(usuarioTeste);
+    await supertest(app.getApptest())
+      .post("/auth/registrar")
+      .set("Content-Type", "application/json")
+      .send(usuarioTeste2);
     const loginResponse = await supertest(app.getApptest())
       .post("/auth/login")
       .set("Content-Type", "application/json")
@@ -49,10 +60,9 @@ describe("Testes de Usuario", () => {
       .get("/usuarios")
       .set("Authorization", `Bearer ${loginResponse.body.token}`);
     expect(response.statusCode).toBe(200);
-    const usuarioEncontrado = response.body.some(
-      (u: { email: string; nome: string }) =>
-        u.email === usuarioTeste.email && u.nome === usuarioTeste.nome,
-    );
-    expect(usuarioEncontrado).toBe(true);
+    const temFulano1 = response.body.some((u : UsuarioTesteType) => u.email === usuarioTeste.email);
+    const temFulano2 = response.body.some((u : UsuarioTesteType) => u.email === usuarioTeste2.email);
+    expect(temFulano1).toBe(true);
+    expect(temFulano2).toBe(true);
   });
 });
