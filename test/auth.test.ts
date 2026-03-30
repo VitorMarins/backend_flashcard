@@ -9,7 +9,7 @@ describe("Testes de Autenticação", () => {
     senha: "teste",
   };
 
-  test("Deve Cadastrar um usuario", async () => {
+  test("CT01 - Deve Cadastrar um usuario", async () => {
     const response = await supertest(app.getApptest())
       .post("/auth/registrar")
       .send(usuarioTeste);
@@ -20,7 +20,7 @@ describe("Testes de Autenticação", () => {
     });
   });
 
-  test("Não deve cadastrar um usuario com dados de entrada errados", async () => {
+  test("CT02 - Não deve cadastrar um usuario com dados de entrada errados", async () => {
     const response = await supertest(app.getApptest())
       .post("/auth/registrar")
       .send({
@@ -34,7 +34,7 @@ describe("Testes de Autenticação", () => {
     });
   });
 
-  test("Não deve cadastrar um usuario ja existente", async () => {
+  test("CT03 - Não deve cadastrar um usuario ja existente", async () => {
     await supertest(app.getApptest())
       .post("/auth/registrar")
       .send(usuarioTeste);
@@ -51,7 +51,7 @@ describe("Testes de Autenticação", () => {
     });
   });
 
-  test("Deve logar um usuario existente", async () => {
+  test("CT04 - Deve logar um usuario existente", async () => {
     await supertest(app.getApptest())
       .post("/auth/registrar")
       .send(usuarioTeste);
@@ -65,7 +65,7 @@ describe("Testes de Autenticação", () => {
     expect(response.body).toHaveProperty("token");
   });
 
-  test("Não deve logar com email não cadastrado", async () => {
+  test("CT05 - Não deve logar com email não cadastrado", async () => {
     const response = await supertest(app.getApptest())
       .post("/auth/login")
       .send({
